@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "shulkeropen",
+  "version": "1.0.0",
+  "name": "Shulker Open",
+  "description": "Shift+right-click to open shulker boxes without placing them.",
+  "authors": ["Wheeler-Shigley"],
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.wheelershigley.shulkeropen.ShulkerOpen"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "fabric": "*",
+    "minecraft": "1.21.11"
+  }
+}

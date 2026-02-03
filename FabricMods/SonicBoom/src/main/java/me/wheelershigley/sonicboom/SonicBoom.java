@@ -50,10 +50,21 @@ public class SonicBoom implements ModInitializer {
 
         if (state.boomCooldown > 0) state.boomCooldown--;
 
+        // Apply pending boost gradually (spread across multiple ticks to avoid anti-cheat)
+        if (state.boostTicksRemaining > 0 && state.pendingBoost.lengthSquared() > 0) {
+            Vec3d tickBoost = state.pendingBoost.multiply(1.0 / state.boostTicksRemaining);
+            player.addVelocity(tickBoost.x, tickBoost.y, tickBoost.z);
+            player.velocityDirty = true;
+            state.pendingBoost = state.pendingBoost.subtract(tickBoost);
+            state.boostTicksRemaining--;
+        }
+
         if (!player.isGliding()) {
             state.wasFlying = false;
             state.currentMach = 0;
             state.speedBuildup = 0;
+            state.pendingBoost = Vec3d.ZERO;
+            state.boostTicksRemaining = 0;
             return;
         }
 
@@ -72,7 +83,7 @@ public class SonicBoom implements ModInitializer {
 
             // Trigger boom when breaking into a NEW higher mach level
             if (newMach > state.currentMach && newMach >= 1) {
-                triggerSonicBoom(player, world, velocity, newMach);
+                triggerSonicBoom(player, world, velocity, newMach, state);
                 state.boomCooldown = BOOM_COOLDOWN_TICKS;
                 state.currentMach = newMach;
             } else if (newMach > state.currentMach) {
@@ -145,7 +156,7 @@ public class SonicBoom implements ModInitializer {
         }
     }
 
-    private void triggerSonicBoom(ServerPlayerEntity player, ServerWorld world, Vec3d velocity, int mach) {
+    private void triggerSonicBoom(ServerPlayerEntity player, ServerWorld world, Vec3d velocity, int mach, FlightState state) {
         double x = player.getX();
         double y = player.getY();
         double z = player.getZ();
@@ -222,8 +233,10 @@ public class SonicBoom implements ModInitializer {
         }
 
         // === SPEED BOOST ===
+        // Spread boost across multiple ticks to avoid "moved too quickly" warning
         Vec3d boost = velocity.normalize().multiply(boostMult);
-        player.addVelocity(boost.x, boost.y * 0.5, boost.z);
+        state.pendingBoost = new Vec3d(boost.x, boost.y * 0.3, boost.z);
+        state.boostTicksRemaining = 4 + mach; // Higher mach = slightly longer application
 
         // Buffs scale with mach
         int duration = 30 + mach * 15;
@@ -241,5 +254,9 @@ public class SonicBoom implements ModInitializer {
         double speedBuildup = 0;
         int currentMach = 0;
         int boomCooldown = 0;
+
+        // Pending boost to apply gradually (avoids "moved too quickly" warning)
+        Vec3d pendingBoost = Vec3d.ZERO;
+        int boostTicksRemaining = 0;
     }
 }

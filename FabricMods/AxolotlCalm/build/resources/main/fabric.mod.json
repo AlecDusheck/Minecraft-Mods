@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "axolotlcalm",
+  "version": "1.0.0",
+  "name": "Axolotl Calm",
+  "description": "Disables 80% of axolotl pathfinding decisions for a calmer, less chaotic axolotl experience.",
+  "authors": ["Wheeler-Shigley"],
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.wheelershigley.axolotlcalm.AxolotlCalm"
+    ]
+  },
+  "mixins": [
+    "axolotlcalm.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "fabric": "*",
+    "minecraft": "1.21.11"
+  }
+}

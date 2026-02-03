@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "bemine",
+  "version": "1.0.0",
+  "name": "Be Mine",
+  "description": "A romantic command that levitates players with hearts, particles, and spinning pets!",
+  "authors": ["Wheeler-Shigley"],
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.wheelershigley.bemine.BeMine"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "fabric": "*",
+    "minecraft": "1.21.11"
+  }
+}
