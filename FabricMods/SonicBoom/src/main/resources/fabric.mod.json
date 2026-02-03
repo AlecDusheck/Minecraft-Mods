@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "sonicboom",
+  "version": "${version}",
+  "name": "Sonic Boom",
+  "description": "Enhanced elytra flight with sonic booms, speed boosts, contrails, and smoother dynamics!",
+  "authors": ["Wheeler-Shigley"],
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["me.wheelershigley.sonicboom.SonicBoom"]
+  },
+  "mixins": ["sonicboom.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.18.1",
+    "fabric": "*",
+    "minecraft": "1.21.11"
+  }
+}

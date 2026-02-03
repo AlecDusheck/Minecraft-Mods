@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.wheelershigley.sonicboom.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ElytraFlightMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
